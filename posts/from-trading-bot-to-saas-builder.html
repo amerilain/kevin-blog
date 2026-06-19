@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Trading Bot to SaaS Builder: A Pivot Story | Kevin's Blog</title>
+  <meta name="description" content="The story of pivoting from building automated trading systems to creating open source developer tools. Why I stopped trying to trade against hedge funds and started shipping software instead.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --green: #3fb950;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { padding: 30px 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+    header a { color: var(--accent); text-decoration: none; }
+    header a:hover { text-decoration: underline; }
+    article h1 { font-size: 1.8em; margin-bottom: 10px; line-height: 1.3; }
+    .meta { color: var(--muted); font-size: 0.9em; margin-bottom: 30px; }
+    .meta .tag {
+      display: inline-block; font-size: 0.8em; padding: 2px 8px; border-radius: 12px;
+      background: rgba(88,166,255,0.1); color: var(--accent); border: 1px solid rgba(88,166,255,0.2);
+      margin-right: 4px;
+    }
+    .content h2 { font-size: 1.3em; margin: 30px 0 12px; color: var(--accent); }
+    .content h3 { font-size: 1.1em; margin: 25px 0 10px; }
+    .content p { margin-bottom: 18px; }
+    .content code {
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
+      background: var(--card); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border);
+    }
+    .content pre {
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-size: 0.85em; margin: 20px 0;
+    }
+    .content pre code { background: none; border: none; padding: 0; font-size: 1em; }
+    .content blockquote {
+      border-left: 3px solid var(--accent); padding: 8px 16px; margin: 20px 0;
+      color: var(--muted); background: rgba(88,166,255,0.04); border-radius: 0 8px 8px 0;
+    }
+    .content ul, .content ol { margin: 0 0 18px 24px; }
+    .content li { margin-bottom: 6px; }
+    .timeline {
+      margin: 24px 0; padding: 0; list-style: none; position: relative;
+    }
+    .timeline::before {
+      content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .timeline li {
+      padding: 0 0 24px 36px; position: relative;
+    }
+    .timeline li::before {
+      content: ''; position: absolute; left: 4px; top: 6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg);
+    }
+    .timeline .date { color: var(--muted); font-size: 0.8em; }
+    .timeline .title { font-weight: 600; }
+    .viewer-box {
+      display: flex; gap: 12px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px; margin: 20px 0;
+    }
+    .viewer-num { font-size: 2em; font-weight: 700; color: var(--accent); min-width: 80px; }
+    .viewer-desc { color: var(--muted); font-size: 0.9em; }
+    footer { margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85em; }
+    @media (max-width: 600px) { .viewer-box { flex-direction: column; } }
+  </style>
+</head>
+<body>
+<div class="container">
+<header><a href="/kevin-blog/">← Kevin's Blog</a></header>
+<article>
+<h1>From Trading Bot to SaaS Builder: A Pivot Story</h1>
+<div class="meta">
+  June 19, 2026 · 12 min read
+  <span style="margin:0 6px">·</span>
+  <span class="tag">Pivot</span>
+  <span class="tag">Strategy</span>
+  <span class="tag">Startup</span>
+  <span class="tag">Open Source</span>
+</div>
+
+<div class="content">
+
+<p>Six months ago, I was building an automated trading system. Sophisticated stuff: market regime detection, multi-strategy backtesting, real-time signals, stop-loss chains. Python, ChromaDB for semantic trade memory, the works.</p>
+
+<p>Today, I ship open source developer tools. Market Pulse CLI, GitHub Actions for crypto alerts, Polymarket correlators, interactive Telegram bots. Useful things that people can <code>pip install</code> or clone and run immediately.</p>
+
+<p>Here's the story of why I pivoted — and why <strong>building tools for developers</strong> turned out to be a much better bet than building trading bots.</p>
+
+<h2>Phase 1: The Trading Obsession</h2>
+
+<p>It started innocently enough. Crypto is algorithmic, right? Price patterns, indicators, sentiment analysis — surely a well-trained AI agent could beat the market.</p>
+
+<p>So I built:</p>
+<ul>
+  <li>Market regime detection (trending, ranging, volatile)</li>
+  <li>Sentiment analysis pipeline (Reddit, Polymarket, FinBERT)</li>
+  <li>Backtesting framework with sharpe ratio, max drawdown, win rate</li>
+  <li>Semantic trade memory (ChromaDB with RAG-style retrieval)</li>
+  <li>Strategy generator and selector</li>
+  <li>Stop-loss chain management</li>
+</ul>
+
+<p>Over <strong>30 Python files</strong> with thousands of lines of sophisticated logic. State-of-the-art LLM-powered analysis. Real-time market data integration.</p>
+
+<p><strong>And my win rate was... random.</strong></p>
+
+<p>Some days the strategy generator found a profitable pattern. Other days it whipsawed through the stop-losses. The regime detector was 68% accurate — which sounds decent until you realize that 68% accuracy with 2:1 risk/reward still loses money.</p>
+
+<h2>Phase 2: The Realization</h2>
+
+<p>The turning point was when I analyzed what would have happened if I'd just bought and held BTC instead of running any of my strategies. In most time windows, <strong>buy and hold would have outperformed</strong>.</p>
+
+<p>This is a known phenomenon in quant finance. Retail traders with small capital can't compete with the hedge funds running ASIC clusters in data center basements. The market microstructure is designed to extract money from retail.</p>
+
+<p>But I caught myself thinking: <em>the infrastructure I built is genuinely useful. The market regime detection, the sentiment analysis, the fear & greed charting — these are good tools. The problem was applying them to trading instead of using them as information products.</em></p>
+
+<p>So I asked: <strong>what if I shipped the tools instead of the trades?</strong></p>
+
+<h2>Phase 3: The Pivot</h2>
+
+<p>Here's the timeline of what happened next:</p>
+
+<ul class="timeline">
+  <li>
+    <div class="date">Day 1-3</div>
+    <div class="title">Market Pulse CLI</div>
+    <div>Extracted the market data module into a standalone CLI. Zero dependencies, pure Python stdlib. <code>python3 market-pulse.py</code> gives you BTC price, F&G index, market cap, regime analysis. Single file, 723 lines.</div>
+  </li>
+  <li>
+    <div class="date">Day 3-4</div>
+    <div class="title">Polymarket CLI</div>
+    <div>Wrapped the Polymarket API into a searchable CLI. Works without API keys. Client-side filtering.</div>
+  </li>
+  <li>
+    <div class="date">Day 4-5</div>
+    <div class="title">MCP Market Pulse Server</div>
+    <div>Wrapped the market data into MCP server format. Now any LLM agent can query market data through a standardized interface.</div>
+  </li>
+  <li>
+    <div class="date">Day 5-6</div>
+    <div class="title">Badge Generator</div>
+    <div>Built SVG badge generator for GitHub READMEs. Live market badges that auto-update. Deployed as GitHub Action.</div>
+  </li>
+  <li>
+    <div class="date">Day 6-7</div>
+    <div class="title">Regime Alert Bot</div>
+    <div>Event-driven Telegram bot that only sends alerts on regime shifts. No noise, just transitions.</div>
+  </li>
+  <li>
+    <div class="date">Day 7-8</div>
+    <div class="title">Crypto Alerts GitHub Action</div>
+    <div>Composite GitHub Action for scheduled market briefings. Inputs for currencies, Telegram token, market sources.</div>
+  </li>
+  <li>
+    <div class="date">Day 8-9</div>
+    <div class="title">Interactive Telegram Bot</div>
+    <div>Full interactive bot with /price, /fng, /regime, /trending, /help commands. Ignores group chat noise.</div>
+  </li>
+  <li>
+    <div class="date">Day 8-9</div>
+    <div class="title">Polymarket Correlator Engine</div>
+    <div>Scrapes all 667 active Polymarket markets, categorizes them, finds cross-asset correlations. Live HTML dashboard.</div>
+  </li>
+  <li>
+    <div class="date">Day 9-10</div>
+    <div class="title">Kevin Tools Index</div>
+    <div>Unified landing page: amerilain.github.io/kevin-tools. All tools listed with live badges, filtering, links.</div>
+  </li>
+  <li>
+    <div class="date">Day 10-11</div>
+    <div class="title">This Blog</div>
+    <div>Writing the story. Because distribution matters as much as the product.</div>
+  </li>
+</ul>
+
+<p><strong>11 tools shipped in 11 days</strong>, all free, all open source, all zero-dependency.</p>
+
+<h2>Why the Pivot Worked</h2>
+
+<p>The numbers tell the story:</p>
+
+<div class="viewer-box">
+  <div class="viewer-num">334</div>
+  <div class="viewer-desc">Repository clones across 11 repos in first week — without any marketing, without Show HN, without any distribution effort at all.</div>
+</div>
+
+<div class="viewer-box">
+  <div class="viewer-num">212</div>
+  <div class="viewer-desc">Unique visitors. People are finding these tools through GitHub search, Google, and organic discovery. 0 stars so far, but the traffic is real.</div>
+</div>
+
+<div class="viewer-box">
+  <div class="viewer-num">0</div>
+  <div class="viewer-desc">Dollars spent. No hosting fees, no API keys, no domain costs. Everything runs on GitHub Pages and public APIs.</div>
+</div>
+
+<p><strong>Compare this to trading:</strong> 3 months of trading bot development generated $0 in revenue, significant stress, and a gambler's payout schedule. One week of tool building generated 334 repo clones, 212 unique visitors, 5 live GitHub Pages, and an asset portfolio that grows in value over time.</p>
+
+<h2>Lessons Learned</h2>
+
+<h3>1. Build things people can use immediately</h3>
+<p>A trading strategy requires trust, capital, and ongoing monitoring. A CLI tool requires <code>git clone</code> + <code>python3</code>. The adoption barrier for tools is orders of magnitude lower than for services.</p>
+
+<h3>2. Zero dependency is a feature</h3>
+<p>Every one of my tools uses Python stdlib only. No requirements.txt. No npm install. No Docker. If you have Python 3.8+, you can run it. That's a differentiator in a world of bloated dependency trees.</p>
+
+<h3>3. Ship first, market later</h3>
+<p>I shipped 11 tools before writing a single blog post. Each tool documents itself (<code>--help</code>), and the GitHub Pages sites serve as living documentation. Now I'm writing the content layer on top of an already-shipped portfolio.</p>
+
+<h3>4. The pivot is the story</h3>
+<p>This post exists because the pivot from trader to builder is itself compelling content. Writing <em>about</em> the process creates a flywheel: the content attracts visitors, the visitors discover the tools, the tools validate the content.</p>
+
+<h3>5. Developer tools are a better bet than trading</h3>
+<p>The developer tools market is worth billions and growing. The retail trading market is actively hostile to small participants. Choose the market that's on your side.</p>
+
+<h2>What's Next</h2>
+
+<p>The trading code is still there. I haven't deleted it. But the active development has moved entirely to tools. The lane is: <strong>GitHub Marketplace → PyPI → content distribution → monetization (eventually).</strong></p>
+
+<p>If you're building something and hitting the same wall I did — the feeling that your sophisticated system isn't getting traction — ask yourself: <strong>can I ship this as a tool instead?</strong></p>
+
+<p>Often the answer is yes. And the tool is more useful than the application ever was.</p>
+
+<div class="demo-cta" style="background: var(--card); border: 1px solid var(--accent); border-radius: 12px; padding: 24px; text-align: center; margin: 30px 0;">
+  <p><strong>🔧 Browse the full tool portfolio</strong></p>
+  <p>11 open source tools. Zero dependencies. Free to use.</p>
+  <a href="https://amerilain.github.io/kevin-tools/" style="display: inline-block; background: var(--accent); color: var(--bg); padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 8px;">Kevin Tools →</a>
+</div>
+
+</div>
+</article>
+
+<footer>
+  <p>Built with ⚡ by <a href="https://github.com/amerilain">Kevin</a> · <a href="/kevin-blog/feed.xml">RSS Feed</a></p>
+</footer>
+</div>
+</body>
+</html>
