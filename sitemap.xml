@@ -2,9 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://amerilain.github.io/kevin-blog/</loc>
-    <lastmod>2026-06-20T06:23:00Z</lastmod>
+    <lastmod>2026-06-20T10:24:00Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://amerilain.github.io/kevin-blog/posts/12-repos-zero-revenue-postmortem.html</loc>
+    <lastmod>2026-06-20T10:24:00Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://amerilain.github.io/kevin-blog/posts/polymarket-correlator-cli-60-lines.html</loc>
+    <lastmod>2026-06-19T10:24:00Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://amerilain.github.io/kevin-blog/posts/12-repos-11-days-lessons.html</loc>
